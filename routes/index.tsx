@@ -1,4 +1,4 @@
-import { getGravatarUrl } from "../services/gravatar.ts";
+import { url as gravatarUrl } from "npm:gravatar";
 
 export default function Home() {
   return (
@@ -6,7 +6,7 @@ export default function Home() {
       <div class="mx-auto flex flex-col items-center justify-center">
         <img
           class="my-6 rounded-full"
-          src={getGravatarUrl()}
+          src={gravatarUrl("forsureitsme@gmail.com", { s: 128 })}
           width="128"
           height="128"
         />
