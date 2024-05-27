@@ -1,53 +1,70 @@
 import { CheerioAPI, load } from "npm:cheerio";
-import { parse } from "node:url";
-import { extname, join } from "node:path";
-import { existsSync } from "node:fs";
+import { KpopGroup, KpopGroupMember } from "../types.d.ts";
+import { dirname } from "$std/path/dirname.ts";
+import { extname } from "$std/path/extname.ts";
+import { join } from "$std/path/join.ts";
+import { existsSync } from "$std/fs/exists.ts";
 
-let $: CheerioAPI;
 const baseUrl = "https://kpopping.com";
 
 const response = await fetch(Deno.args[0]);
 const body = await response.text();
-$ = load(body);
+const $ = load(body);
+
 const $encyclopedia = $(".encyclopedia");
 const groupName = $(".group-pose figcaption h1", $encyclopedia).text().trim();
 
-interface Member {
-  name: string;
-  image: string;
-}
-
-const members: Array<Member> = [];
-$(".members .member img", $encyclopedia).each(
-  async (_, element) => {
-    const imageUrl = `${baseUrl}${$(element).attr("src")}`;
-    const extension = extname(parse(imageUrl).pathname || "");
-    const groupPath = join(
-      `img`,
-      groupName,
-    );
-    const memberName = $(element).attr("alt") || '';
+const getGroupMembers = ($: CheerioAPI) => {
+  const members: Array<KpopGroupMember> = [];
+  $(".members .member img", $encyclopedia).each((_, element): void => {
+    const imageUrl = new URL($(element).attr("src") || "", baseUrl);
+    const extension = extname(imageUrl.pathname);
+    const memberName = $(element).attr("alt") || "";
     const fileName = `${memberName}${extension}`;
-    const member: Member = { name: memberName, image: `img/${groupName}/${fileName}` };
-    const picturePath = join(Deno.cwd(), "static", groupPath, fileName);
-    members.push(member);
+    members.push({
+      name: memberName,
+      image: `img/${groupName}/${fileName}`,
+      remoteImage: imageUrl.href,
+    });
+  });
+  return members;
+};
 
-    if (!existsSync(picturePath)) {
-      const response = await fetch(imageUrl);
-      const data = await response.arrayBuffer();
-      Deno.mkdirSync(join(Deno.cwd(), "static", groupPath), { recursive: true });
-      Deno.writeFileSync(
-        picturePath,
-        new Uint8Array(data),
-      );
-    }
-  },
-);
+const saveGroupInfo = (members: Array<KpopGroupMember>) => {
+  const group: KpopGroup = { name: groupName, members };
+  Deno.writeTextFileSync(
+    join(Deno.cwd(), "static", "tierlists", `${groupName}.json`),
+    JSON.stringify(group),
+  );
+};
 
-Deno.writeTextFileSync(
-  join(Deno.cwd(), "static", "tierlists", groupName + ".json"),
-  JSON.stringify({
-    name: groupName,
-    members,
-  }),
-);
+const downloadFileToPath = async (url: URL, filePath: string) => {
+  const res = await fetch(url);
+  const buffer = await res.arrayBuffer();
+  const localDir = dirname(filePath);
+
+  if (!existsSync(localDir)) {
+    Deno.mkdirSync(localDir, { recursive: true });
+  }
+  
+  Deno.writeFileSync(filePath, new Uint8Array(buffer));
+};
+
+const processMemberImages = async (members: Array<KpopGroupMember>) => {
+  return await Promise.allSettled(
+    members.map((member) => {
+      const picturePath = join(Deno.cwd(), "static", member.image);
+      if (!existsSync(picturePath)) {
+        downloadFileToPath(new URL(member.remoteImage), picturePath);
+      }
+    }),
+  );
+};
+
+try {
+  const members = getGroupMembers($);
+  saveGroupInfo(members);
+  processMemberImages(members);
+} catch (err) {
+  console.error("Error:", err);
+}
