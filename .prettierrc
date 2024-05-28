@@ -1,4 +1,19 @@
 {
   "tabWidth": 2,
-  "useTabs": false
+  "useTabs": false,
+  "$schema": "http://json.schemastore.org/tslint",
+  "rules": {
+    "no-unused-expression": true,
+    "max-line-length": [
+      true,
+      100
+    ],
+    "trailing-comma": [
+      true,
+      {
+        "multiline": "never",
+        "singleline": "never"
+      }
+    ]
+  }
 }

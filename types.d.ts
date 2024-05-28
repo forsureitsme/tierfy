@@ -1,10 +1,15 @@
-export interface KpopGroupMember {
+export interface TierableItem {
   name: string;
   image: string;
   remoteImage: string;
 }
 
-export interface KpopGroup {
+export interface TierList {
   name: string;
-  members?: Array<KpopGroupMember>;
+  items?: Array<TierableItem>;
+}
+
+export interface ScrapedItem {
+  name: string;
+  remoteImage: string;
 }
