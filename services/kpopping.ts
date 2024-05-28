@@ -1,6 +1,6 @@
 import { load } from "npm:cheerio";
 import { TierableItem } from "../types.d.ts";
-import { makeTierableItem, saveTierListInfo } from "./tierList.ts";
+import { makeTierableItem, saveTierListDefinition } from "./tierList.ts";
 
 const baseUrl = "https://kpopping.com";
 
@@ -19,4 +19,4 @@ $(".members .member img", $encyclopedia).each((_, element): void => {
   }));
 });
 
-await saveTierListInfo(groupName, members);
+await saveTierListDefinition(groupName, members);

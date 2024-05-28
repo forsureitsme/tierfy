@@ -22,7 +22,7 @@ const downloadFileToPath = async (url: URL, filePath: string) => {
 const processItemImages = async (items: Array<TierableItem>) => {
   return await Promise.allSettled(
     items.map((item) => {
-      const picturePath = join(Deno.cwd(), "static", "img", item.image);
+      const picturePath = join(Deno.cwd(), "static", "img", "tierlist-items", item.image);
       if (!existsSync(picturePath)) {
         downloadFileToPath(new URL(item.remoteImage), picturePath);
       }
@@ -30,18 +30,27 @@ const processItemImages = async (items: Array<TierableItem>) => {
   );
 };
 
-export const saveTierListInfo = async (
+export const saveTierListDefinition = async (
   tierListName: string,
   items: Array<TierableItem>,
 ) => {
   const tierList: TierList = { name: tierListName, items };
+
+  const filePath = join(
+    Deno.cwd(),
+    "static",
+    "tierlists",
+    "definitions",
+    `${encodeURIComponent(tierListName)}.json`,
+  );
+  const localDir = dirname(filePath);
+
+  if (!existsSync(localDir)) {
+    Deno.mkdirSync(localDir, { recursive: true });
+  }
+
   Deno.writeTextFileSync(
-    join(
-      Deno.cwd(),
-      "static",
-      "tierlists",
-      `${encodeURIComponent(tierListName)}.json`,
-    ),
+    filePath,
     JSON.stringify(tierList),
   );
 
