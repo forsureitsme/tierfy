@@ -1,15 +1,19 @@
-export interface TierableItem {
+export interface ITierableItem {
   name: string;
   image: string;
   remoteImage: string;
 }
 
-export interface TierList {
+export interface ITierList {
   name: string;
-  items?: Array<TierableItem>;
+  items?: Array<ITierableItem>;
 }
 
-export interface ScrapedItem {
+export interface IScrapedItem {
   name: string;
   remoteImage: string;
+}
+
+export interface ITierlistHandlers {
+  [onTierClick: string]: (event: Event) => void;
 }

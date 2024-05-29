@@ -1,9 +1,9 @@
-import { TierableItem } from "../types.d.ts";
+import { ITierableItem } from "../types.d.ts";
 import { makeTierableItem, saveTierListDefinition } from "./tierList.ts";
 import { Cards } from "npm:scryfall-sdk";
 
 const cardListName = "Basic land arts";
-const cards: Array<TierableItem> = [];
+const cards: Array<ITierableItem> = [];
 
 for await (
   const card of Cards.search("t:basic", {

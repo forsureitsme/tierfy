@@ -1,5 +1,5 @@
 import { load } from "npm:cheerio";
-import { TierableItem } from "../types.d.ts";
+import { ITierableItem } from "../types.d.ts";
 import { makeTierableItem, saveTierListDefinition } from "./tierList.ts";
 
 const baseUrl = "https://kpopping.com";
@@ -11,7 +11,7 @@ const $ = load(body);
 const $encyclopedia = $(".encyclopedia");
 const groupName = $(".group-pose figcaption h1", $encyclopedia).text().trim();
 
-const members: Array<TierableItem> = [];
+const members: Array<ITierableItem> = [];
 $(".members .member img", $encyclopedia).each((_, element): void => {
   members.push(makeTierableItem(groupName, {
     name: $(element).attr("alt") || "",

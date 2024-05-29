@@ -6,7 +6,7 @@ import * as $_404 from "./routes/_404.tsx";
 import * as $_app from "./routes/_app.tsx";
 import * as $index from "./routes/index.tsx";
 import * as $tierlist_definition_ from "./routes/tierlist/[definition].tsx";
-
+import * as $TierlistWithHandlers from "./islands/TierlistWithHandlers.tsx";
 import { type Manifest } from "$fresh/server.ts";
 
 const manifest = {
@@ -16,7 +16,9 @@ const manifest = {
     "./routes/index.tsx": $index,
     "./routes/tierlist/[definition].tsx": $tierlist_definition_,
   },
-  islands: {},
+  islands: {
+    "./islands/TierlistWithHandlers.tsx": $TierlistWithHandlers,
+  },
   baseUrl: import.meta.url,
 } satisfies Manifest;
 

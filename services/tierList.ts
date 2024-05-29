@@ -1,8 +1,8 @@
 import { dirname } from "$std/path/dirname.ts";
 import { existsSync } from "$std/fs/exists.ts";
 import { join } from "$std/path/join.ts";
-import { ScrapedItem, TierableItem } from "../types.d.ts";
-import { TierList } from "../types.d.ts";
+import { IScrapedItem, ITierableItem } from "../types.d.ts";
+import { ITierList } from "../types.d.ts";
 import { extname } from "$std/path/extname.ts";
 import { delay } from "$std/async/delay.ts";
 
@@ -19,7 +19,7 @@ const downloadFileToPath = async (url: URL, filePath: string) => {
   Deno.writeFileSync(filePath, new Uint8Array(buffer));
 };
 
-const processItemImages = async (items: Array<TierableItem>) => {
+const processItemImages = async (items: Array<ITierableItem>) => {
   return await Promise.allSettled(
     items.map((item) => {
       const picturePath = join(Deno.cwd(), "static", "img", "tierlist-items", item.image);
@@ -32,9 +32,9 @@ const processItemImages = async (items: Array<TierableItem>) => {
 
 export const saveTierListDefinition = async (
   tierListName: string,
-  items: Array<TierableItem>,
+  items: Array<ITierableItem>,
 ) => {
-  const tierList: TierList = { name: tierListName, items };
+  const tierList: ITierList = { name: tierListName, items };
 
   const filePath = join(
     Deno.cwd(),
@@ -59,8 +59,8 @@ export const saveTierListDefinition = async (
 
 export const makeTierableItem = (
   tierListName: string,
-  item: ScrapedItem,
-): TierableItem => {
+  item: IScrapedItem,
+): ITierableItem => {
   const imageUrl = new URL(item.remoteImage);
   const extension = extname(imageUrl.pathname);
   const memberName = item.name;
