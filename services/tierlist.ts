@@ -1,8 +1,8 @@
 import { dirname } from "$std/path/dirname.ts";
 import { existsSync } from "$std/fs/exists.ts";
 import { join } from "$std/path/join.ts";
-import { IScrapedItem, ITierableItem } from "../types.d.ts";
-import { ITierList } from "../types.d.ts";
+import { IScrapedItem, ITierableItem } from "@/types.d.ts";
+import { ITierList } from "@/types.d.ts";
 import { extname } from "$std/path/extname.ts";
 import { delay } from "$std/async/delay.ts";
 
@@ -31,17 +31,17 @@ const processItemImages = async (items: Array<ITierableItem>) => {
 };
 
 export const saveTierListDefinition = async (
-  tierListName: string,
+  tierlistName: string,
   items: Array<ITierableItem>,
 ) => {
-  const tierList: ITierList = { name: tierListName, items };
+  const tierlist: ITierList = { name: tierlistName, items };
 
   const filePath = join(
     Deno.cwd(),
     "static",
     "tierlists",
     "definitions",
-    `${encodeURIComponent(tierListName)}.json`,
+    `${encodeURIComponent(tierlistName)}.json`,
   );
   const localDir = dirname(filePath);
 
@@ -51,14 +51,14 @@ export const saveTierListDefinition = async (
 
   Deno.writeTextFileSync(
     filePath,
-    JSON.stringify(tierList),
+    JSON.stringify(tierlist),
   );
 
   return await processItemImages(items);
 };
 
 export const makeTierableItem = (
-  tierListName: string,
+  tierlistName: string,
   item: IScrapedItem,
 ): ITierableItem => {
   const imageUrl = new URL(item.remoteImage);
@@ -67,7 +67,7 @@ export const makeTierableItem = (
   const fileName = `${memberName}${extension}`;
   return {
     name: memberName,
-    image: `${encodeURIComponent(tierListName)}/${fileName}`,
+    image: `${encodeURIComponent(tierlistName)}/${fileName}`,
     remoteImage: imageUrl.href,
   };
 };

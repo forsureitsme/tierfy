@@ -1,6 +1,6 @@
 import { load } from "npm:cheerio";
-import { ITierableItem } from "../types.d.ts";
-import { makeTierableItem, saveTierListDefinition } from "./tierList.ts";
+import { ITierableItem } from "@/types.d.ts";
+import { makeTierableItem, saveTierListDefinition } from "./tierlist.ts";
 
 const baseUrl = "https://kpopping.com";
 

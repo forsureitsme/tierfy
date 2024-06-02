@@ -1,4 +1,4 @@
-import { ITierlistHandlers } from "../types.d.ts";
+import { ITierlistHandlers } from "@/types.d.ts";
 
 const TierlistHandlers: ITierlistHandlers = {
   onTierClick: (event: Event) => {

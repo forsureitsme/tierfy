@@ -2,15 +2,13 @@ import { PageProps } from "$fresh/server.ts";
 import { existsSync } from "$std/fs/exists.ts";
 import { join } from "$std/path/join.ts";
 import { FreshContext } from "$fresh/src/server/types.ts";
-import { ITierList as Definition } from "../../types.d.ts";
+import { ITierList as Definition } from "@/types.d.ts";
 
 const Tierlist = (
   await import(
-    `../../${
-      Deno.env.get("ENV") === "development"
-        ? "islands/TierlistWithHandlers.tsx"
-        : "components/TierlistWithoutHandlers.tsx"
-    }`
+    Deno.env.get("ENV") === "development"
+      ? "@/islands/TierlistWithHandlers.tsx"
+      : "@/components/TierlistWithoutHandlers.tsx"
   )
 ).default;
 
@@ -25,7 +23,7 @@ export async function handler(_req: Request, ctx: FreshContext<State>) {
     "static",
     "tierlists",
     "definitions",
-    `${definition}.json`
+    `${definition}.json`,
   );
   if (!existsSync(filePath)) {
     throw new Deno.errors.NotFound();

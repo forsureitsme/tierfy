@@ -1,5 +1,5 @@
-import TierlistHandlers from "../islands/TierlistWithHandlers.tsx";
-import { ITierList, ITierlistHandlers } from "../types.d.ts";
+import TierlistHandlers from "@/islands/TierlistWithHandlers.tsx";
+import { ITierList, ITierlistHandlers } from "@/types.d.ts";
 
 export interface TierlistProps {
   definition: ITierList;
