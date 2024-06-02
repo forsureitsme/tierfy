@@ -29,7 +29,8 @@
     "tailwindcss/plugin": "npm:/tailwindcss@3.4.1/plugin.js",
     "$std/": "https://deno.land/std@0.216.0/",
     "$esm/": "https://esm.sh/",
-    "@/": "./"
+    "@/": "./",
+    "$dnd": "https://esm.sh/@dnd-kit/core@6.1.0?alias=react:preact/compat&external=preact"
   },
   "compilerOptions": {
     "jsx": "react-jsx",

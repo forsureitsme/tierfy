@@ -6,10 +6,6 @@ import * as $_404 from "./routes/_404.tsx";
 import * as $_app from "./routes/_app.tsx";
 import * as $index from "./routes/index.tsx";
 import * as $tierlist_definition_ from "./routes/tierlist/[definition].tsx";
-import * as $Column from "./islands/Tier.tsx";
-import * as $Draggable from "./islands/Draggable.tsx";
-import * as $DraggableElement from "./islands/DraggableElement.tsx";
-import * as $Droppable from "./islands/Droppable.tsx";
 import * as $TierlistWithHandlers from "./islands/TierlistWithHandlers.tsx";
 import { type Manifest } from "$fresh/server.ts";
 
@@ -21,10 +17,6 @@ const manifest = {
     "./routes/tierlist/[definition].tsx": $tierlist_definition_,
   },
   islands: {
-    "./islands/Column.tsx": $Column,
-    "./islands/Draggable.tsx": $Draggable,
-    "./islands/DraggableElement.tsx": $DraggableElement,
-    "./islands/Droppable.tsx": $Droppable,
     "./islands/TierlistWithHandlers.tsx": $TierlistWithHandlers,
   },
   baseUrl: import.meta.url,

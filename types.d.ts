@@ -1,12 +1,16 @@
+import { type UniqueIdentifier } from "$dnd";
+
 export interface ITierableItem {
+  id: UniqueIdentifier;
   name: string;
   image: string;
   remoteImage: string;
 }
 
-export interface ITierList {
+export interface ITierlist {
   name: string;
-  items?: Array<ITierableItem>;
+  items: Array<ITierableItem>;
+  tiers: Array<ITier>;
 }
 
 export interface IScrapedItem {
@@ -14,6 +18,9 @@ export interface IScrapedItem {
   remoteImage: string;
 }
 
-export interface ITierlistHandlers {
-  [onTierClick: string]: (event: Event) => void;
+export interface ITier {
+  id: UniqueIdentifier;
+  label: string;
+  backgroundColor: `#${string}`;
+  items: Array<ITierableItem>;
 }

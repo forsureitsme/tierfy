@@ -1,5 +1,5 @@
 import { ITierableItem } from "@/types.d.ts";
-import { makeTierableItem, saveTierListDefinition } from "./tierlist.ts";
+import { makeTierableItem, saveTierListDefinition } from "@/services/tierlist.ts";
 import { Cards } from "npm:scryfall-sdk";
 
 const cardListName = "Basic land arts";

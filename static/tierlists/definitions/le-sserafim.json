@@ -1,0 +1,73 @@
+{
+  "name": "LE SSERAFIM",
+  "items": [
+    {
+      "id": "b553e581-7776-4768-a7c4-16b1fc96ea54",
+      "name": "Sakura",
+      "image": "le-sserafim/Sakura.webp",
+      "remoteImage": "https://kpopping.com/documents/c9/2/250/Sakura-facePicture(16).webp?v=feeeb"
+    },
+    {
+      "id": "1f684955-e6a6-40e2-949f-33603e7b2221",
+      "name": "Chaewon",
+      "image": "le-sserafim/Chaewon.webp",
+      "remoteImage": "https://kpopping.com/documents/ae/1/250/Chaewon-facePicture(25).webp?v=feeeb"
+    },
+    {
+      "id": "784bade4-3561-4aa8-81ff-4d88e6170b19",
+      "name": "Huh Yunjin",
+      "image": "le-sserafim/Huh Yunjin.webp",
+      "remoteImage": "https://kpopping.com/documents/a9/4/250/Huh-Yunjin-facePicture(10).webp?v=feeeb"
+    },
+    {
+      "id": "2274eb75-ee08-46ef-afd6-35fd9f680a93",
+      "name": "Kazuha",
+      "image": "le-sserafim/Kazuha.webp",
+      "remoteImage": "https://kpopping.com/documents/13/2/250/Kazuha-facePicture(16).webp?v=feeeb"
+    },
+    {
+      "id": "cf59b7b8-e02f-40c8-8a0b-9d503c792707",
+      "name": "Eunchae",
+      "image": "le-sserafim/Eunchae.webp",
+      "remoteImage": "https://kpopping.com/documents/90/3/250/Eunchae-facePicture(20).webp?v=feeeb"
+    },
+    {
+      "id": "e5074ac7-ee81-4c3e-9e36-44d5b4d4634e",
+      "name": "Garam",
+      "image": "le-sserafim/Garam.webp",
+      "remoteImage": "https://kpopping.com/documents/9f/4/250/Garam-facePicture(4).webp?v=feeeb"
+    }
+  ],
+  "tiers": [
+    {
+      "id": "b0e9d77f-3921-4c40-ab7f-5ea597f7dea6",
+      "label": "S",
+      "backgroundColor": "#FF5733",
+      "items": []
+    },
+    {
+      "id": "115e0b2c-72a4-41ed-a51d-4f5dc1f15a59",
+      "label": "A",
+      "backgroundColor": "#C70039",
+      "items": []
+    },
+    {
+      "id": "a0a18637-fdfd-4106-a284-b8c9b84a9024",
+      "label": "B",
+      "backgroundColor": "#900C3F",
+      "items": []
+    },
+    {
+      "id": "5a3c6a63-090c-4d48-8f22-ef87846c352a",
+      "label": "C",
+      "backgroundColor": "#581845",
+      "items": []
+    },
+    {
+      "id": "4d6b964f-1961-418b-9244-fde3e53ac183",
+      "label": "D",
+      "backgroundColor": "#DAF7A6",
+      "items": []
+    }
+  ]
+}
