@@ -1,6 +1,6 @@
 import { type FunctionComponent } from "preact";
 
-import { ItemList } from "@/components/ItemList.tsx";
+import { ItemList } from "@/islands/ItemList.tsx";
 import { ITier } from "@/types.d.ts";
 
 export const Tier: FunctionComponent<ITier> = (
@@ -32,7 +32,7 @@ export const Tier: FunctionComponent<ITier> = (
           backgroundColor: "black",
         }}
       >
-        <ItemList {...{ id: `${id}`, items }} />
+        <ItemList id={`tier-${id}-items`} items={items} />
       </div>
     </div>
   );

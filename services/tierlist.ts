@@ -41,6 +41,7 @@ export const saveTierListDefinition = async (
   items: Array<ITierableItem>,
 ) => {
   const tierlist: ITierlist = {
+    id: crypto.randomUUID(),
     name: tierlistName,
     items,
     tiers: [{

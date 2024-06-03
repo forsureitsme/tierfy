@@ -1,13 +1,14 @@
-import { type UniqueIdentifier } from "$dnd";
+export type CryptoUUID = `${string}-${string}-${string}-${string}-${string}`;
 
 export interface ITierableItem {
-  id: UniqueIdentifier;
+  id: CryptoUUID;
   name: string;
   image: string;
   remoteImage: string;
 }
 
 export interface ITierlist {
+  id: CryptoUUID;
   name: string;
   items: Array<ITierableItem>;
   tiers: Array<ITier>;
@@ -19,8 +20,8 @@ export interface IScrapedItem {
 }
 
 export interface ITier {
-  id: UniqueIdentifier;
+  id: CryptoUUID;
   label: string;
   backgroundColor: `#${string}`;
-  items: Array<ITierableItem>;
+  items: Array<ITierableItem["id"]>;
 }

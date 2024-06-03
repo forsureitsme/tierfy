@@ -2,7 +2,7 @@ import { PageProps } from "$fresh/server.ts";
 import { existsSync } from "$std/fs/exists.ts";
 import { join } from "$std/path/join.ts";
 import { FreshContext } from "$fresh/src/server/types.ts";
-import { ITierlist as Definition } from "@/types.d.ts";
+import { ITierlist } from "@/types.d.ts";
 
 const Tierlist = (
   await import(
@@ -13,7 +13,7 @@ const Tierlist = (
 ).default;
 
 interface State {
-  definition: Definition;
+  definition: ITierlist;
 }
 
 export async function handler(_req: Request, ctx: FreshContext<State>) {
