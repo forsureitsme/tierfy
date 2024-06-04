@@ -28,7 +28,10 @@ export const ItemList: FunctionComponent<
   }, []);
 
   return (
-    <div style={{ display: "flex", flexWrap: "wrap" }}>
+    <div
+      ref={droppableRef}
+      style={{ display: "flex", height: "100%", border: "1px solid red", position: "relative" }}
+    >
       {items.map((itemId) => (
         <Item
           key={`item-${itemId}`}
@@ -36,9 +39,7 @@ export const ItemList: FunctionComponent<
           tierId={id}
         />
       ))}
-      <div ref={droppableRef} style={{ height: "100%" }}>
-        <DropIndicator edge="left" />
-      </div>
+      <DropIndicator edge="left" />
     </div>
   );
 };

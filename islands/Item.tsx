@@ -1,5 +1,4 @@
 import { type FunctionComponent } from "preact";
-// import { useSortable } from "$esm/@dnd-kit/sortable@8.0.0?alias=react:preact/compat&external=preact";
 import { draggable } from "$esm/@atlaskit/pragmatic-drag-and-drop@1.1.10/element/adapter";
 import { ITier, ITierableItem, ITierlist } from "@/types.d.ts";
 import { asset } from "$fresh/runtime.ts";
@@ -9,7 +8,14 @@ import { useEffect } from "preact/hooks";
 import { useRef } from "preact/hooks";
 import { combine } from "$esm/@atlaskit/pragmatic-drag-and-drop@1.1.10/combine";
 import { dropTargetForElements } from "$esm/@atlaskit/pragmatic-drag-and-drop@1.1.10/element/adapter";
-import { DropIndicator } from "$esm/@atlaskit/pragmatic-drag-and-drop-react-drop-indicator@1.1.1/box";
+
+import {
+  BaseEventPayload,
+  DropTargetLocalizedData,
+  ElementDragType,
+} from "$esm/v135/@atlaskit/pragmatic-drag-and-drop@1.1.10/dist/types/internal-types.d.ts";
+import { forwardRef } from "preact/compat";
+import { useSignal } from "@preact/signals";
 
 export const Item: FunctionComponent<
   { tierId: ITier["id"]; id: ITierableItem["id"] }
@@ -19,69 +25,107 @@ export const Item: FunctionComponent<
   const tierlistSignal = useContext(
     TierlistSignalContext,
   );
-  // const { attributes, listeners, setNodeRef, transform } = useSortable({ id });
   const draggableRef = useRef<HTMLDivElement | null>(null);
   const droppableRef = useRef<HTMLDivElement | null>(null);
+  const itemDraggedOver = useSignal<ITierableItem | null>(null);
+  const isDraggingItem = useSignal<boolean>(false);
 
-  useEffect(() => {
-    if (!draggableRef.current) {
+  if (!tierlistSignal?.value.items) return null;
+
+  const getItemById = (itemId: ITierableItem["id"]) =>
+    tierlistSignal.value.items.find((item) => item.id === itemId) || null;
+
+  const item = getItemById(id);
+  if (!item) return null;
+
+  const onDragEnter = (
+    { source }: BaseEventPayload<ElementDragType> & DropTargetLocalizedData,
+  ) => {
+    const data = source.data as { id: ITierableItem["id"] };
+    if (data.id === id) {
       return;
     }
+    itemDraggedOver.value = getItemById(data.id);
+  };
+  const onDragLeave = () => {
+    itemDraggedOver.value = null;
+  };
 
-    if (!droppableRef.current) {
+  useEffect(() => {
+    if (!draggableRef.current || !droppableRef.current) {
       return;
     }
 
     return combine(
       draggable({
-        element: draggableRef?.current,
+        element: draggableRef.current,
         getInitialData: () => ({
           id,
           tierId,
           type: "item",
         }),
+        onDragStart: () => {
+          isDraggingItem.value = true;
+        },
+        onDrop: () => {
+          isDraggingItem.value = false;
+        },
       }),
       dropTargetForElements({
         element: droppableRef.current,
         getData: () => ({ id }),
         canDrop: ({ source }) => source.data.type === "item",
+        onDragEnter,
+        onDragLeave,
+        onDrop: onDragLeave,
       }),
     );
   }, []);
 
-  if (!tierlistSignal?.value.items) return null;
-
-  const item = tierlistSignal.value.items.find((item) => item.id === id);
-
-  if (!item) return null;
-
-  const { name, image } = item;
-
   return (
-    <>
-      <div
-        ref={droppableRef}
-      >
-        <DropIndicator edge="left" gap="150px" />
-
+    <div
+      ref={droppableRef}
+      style={{
+        position: "relative",
+        border: "1px solid red",
+        display: "flex",
+      }}
+    >
+      {itemDraggedOver.value && (
         <div
-          type="button"
-          ref={draggableRef}
           style={{
-            // transform: transform
-            //   ? `translate3d(${transform.x}px, ${transform.y}px, 0)`
-            //   : "",
-            width: "150px",
-            height: "150px",
-            backgroundImage: `url(${asset(`/img/tierlist-items/${image}`)})`,
-            userSelect: "none",
+            opacity: .25,
           }}
-          // {...listeners}
-          // {...attributes}
         >
-          {name}
+          <PresentationalItem {...itemDraggedOver.value} />
         </div>
-      </div>
-    </>
+      )}
+
+      <PresentationalItem
+        ref={draggableRef}
+        {...item}
+        style={{
+          display: isDraggingItem.value ? "none" : "",
+        }}
+      />
+    </div>
   );
 };
+
+const PresentationalItem = forwardRef(
+  ({ name, image, style, ...props }, ref) => (
+    <div
+      ref={ref}
+      {...props}
+      style={{
+        ...style,
+        width: "150px",
+        height: "150px",
+        backgroundImage: `url(${asset(`/img/tierlist-items/${image}`)})`,
+        userSelect: "none",
+      }}
+    >
+      {name}
+    </div>
+  ),
+);

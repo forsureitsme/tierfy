@@ -1,12 +1,12 @@
 import { type FunctionComponent } from "preact";
-import { signal } from "$esm/@preact/signals@1.2.3";
+import { useSignal } from "@preact/signals";
 import { ITierableItem, ITierlist } from "@/types.d.ts";
 import { Tier } from "@/islands/Tier.tsx";
 import { ItemList } from "@/islands/ItemList.tsx";
 import { createContext } from "preact";
 import { useEffect } from "preact/hooks";
 import { monitorForElements } from "$esm/@atlaskit/pragmatic-drag-and-drop@1.1.10/element/adapter";
-import { Signal } from "$esm/@preact/signals@1.2.3";
+import { Signal } from "@preact/signals";
 
 export const TierlistSignalContext = createContext<Signal<ITierlist> | null>(
   null,
@@ -15,7 +15,7 @@ export const TierlistSignalContext = createContext<Signal<ITierlist> | null>(
 export const Tierlist: FunctionComponent<ITierlist> = (
   { id, name, items, tiers },
 ) => {
-  const tierlistSignal = signal<ITierlist>({ id, name, items, tiers });
+  const tierlistSignal = useSignal<ITierlist>({ id, name, items, tiers });
 
   useEffect(() => {
     return monitorForElements({
@@ -25,11 +25,13 @@ export const Tierlist: FunctionComponent<ITierlist> = (
         console.log({ source, location });
 
         if (
-          !(location.current.dropTargets.length > 0 ||
+          !(location.current.dropTargets.length > 0 &&
             location.current.dropTargets[0].data.id === source.data.id)
         ) {
           return;
         }
+
+        
       },
     });
   }, []);
