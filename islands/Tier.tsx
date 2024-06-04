@@ -32,7 +32,7 @@ export const Tier: FunctionComponent<ITier> = (
           backgroundColor: "black",
         }}
       >
-        <ItemList id={`tier-${id}-items`} items={items} />
+        <ItemList id={id} items={items} />
       </div>
     </div>
   );

@@ -1,8 +1,9 @@
 import { TierlistHandlers } from "@/islands/TierlistHandlers.ts";
 import { Tierlist } from "@/islands/Tierlist.tsx";
 
+const noop = () => {}
 for (const key in TierlistHandlers) {
-  TierlistHandlers[key] = () => {};
+  TierlistHandlers[key] = noop;
 }
 
 export default function TierlistWithHandlers(props) {

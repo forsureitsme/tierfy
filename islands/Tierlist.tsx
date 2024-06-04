@@ -3,40 +3,36 @@ import { signal } from "$esm/@preact/signals@1.2.3";
 import { ITierableItem, ITierlist } from "@/types.d.ts";
 import { Tier } from "@/islands/Tier.tsx";
 import { ItemList } from "@/islands/ItemList.tsx";
-import {
-  closestCorners,
-  DndContext,
-  DragEndEvent,
-  DragOverlay,
-  DragStartEvent,
-} from "$esm/@dnd-kit/core@6.1.0?alias=react:preact/compat&external=preact";
 import { createContext } from "preact";
+import { useEffect } from "preact/hooks";
+import { monitorForElements } from "$esm/@atlaskit/pragmatic-drag-and-drop@1.1.10/element/adapter";
+import { Signal } from "$esm/@preact/signals@1.2.3";
 
-export const TierlistContext = createContext<ITierlist | null>(null);
+export const TierlistSignalContext = createContext<Signal<ITierlist> | null>(
+  null,
+);
 
 export const Tierlist: FunctionComponent<ITierlist> = (
   { id, name, items, tiers },
 ) => {
-  const activeItem = signal<ITierableItem["id"] | null>(null);
-  const handleDragEnd = (e: DragEndEvent) => {
-    activeItem.value = null;
-    // const { active, over } = e;
+  const tierlistSignal = signal<ITierlist>({ id, name, items, tiers });
 
-    // if (over && active.id !== over.id) {
-    //   setItems((items) => {
-    //     const oldIndex = items.indexOf(active.id);
-    //     const newIndex = items.indexOf(over.id);
+  useEffect(() => {
+    return monitorForElements({
+      canMonitor: ({ source }) => source.data.type === "item",
+      onDragStart: () => console.log("something was dragged"),
+      onDrop: ({ source, location }) => {
+        console.log({ source, location });
 
-    //     return arrayMove(items, oldIndex, newIndex);
-    //   });
-    // }
-  };
-
-  const handleDragStart = (event: DragStartEvent) => {
-    const { active } = event;
-
-    activeItem.value = active.id as ITierableItem["id"];
-  };
+        if (
+          !(location.current.dropTargets.length > 0 ||
+            location.current.dropTargets[0].data.id === source.data.id)
+        ) {
+          return;
+        }
+      },
+    });
+  }, []);
 
   const untieredItems = () =>
     items.reduce(
@@ -48,30 +44,17 @@ export const Tierlist: FunctionComponent<ITierlist> = (
     );
 
   return (
-    <TierlistContext.Provider value={{ id, name, items, tiers }}>
+    <TierlistSignalContext.Provider value={tierlistSignal}>
       <div>
         <h2>{name}</h2>
-        <DndContext
-          onDragEnd={handleDragEnd}
-          collisionDetection={closestCorners}
-          onDragStart={handleDragStart}
-        >
-          {
-            <>
-              <div>{tiers.map((tier) => <Tier {...tier} />)}</div>
-              <div>
-                <ItemList
-                  id={`untiered-${id}`}
-                  items={untieredItems()}
-                />
-              </div>
-              <DragOverlay>
-                {activeItem.value ? <Item id={activeItem.value} /> : null}
-              </DragOverlay>
-            </>
-          }
-        </DndContext>
+        <div>{tiers.map((tier) => <Tier {...tier} />)}</div>
+        <div>
+          <ItemList
+            id={`untiered-${id}`}
+            items={untieredItems()}
+          />
+        </div>
       </div>
-    </TierlistContext.Provider>
+    </TierlistSignalContext.Provider>
   );
 };
