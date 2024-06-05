@@ -1,6 +1,6 @@
 import { type FunctionComponent } from "preact";
 import { useSignal } from "@preact/signals";
-import { ITierableItem, ITierlist } from "@/types.d.ts";
+import { ITierlist } from "@/types.d.ts";
 import { Tier } from "@/islands/Tier.tsx";
 import { ItemList } from "@/islands/ItemList.tsx";
 import { createContext } from "preact";
@@ -30,20 +30,9 @@ export const Tierlist: FunctionComponent<ITierlist> = (
         ) {
           return;
         }
-
-        
       },
     });
   }, []);
-
-  const untieredItems = () =>
-    items.reduce(
-      (untieredItems: ITierableItem["id"][], item: ITierableItem) =>
-        !tiers.some((tier) => tier.items.includes(item.id))
-          ? [...untieredItems, item.id]
-          : untieredItems,
-      [],
-    );
 
   return (
     <TierlistSignalContext.Provider value={tierlistSignal}>
@@ -52,8 +41,7 @@ export const Tierlist: FunctionComponent<ITierlist> = (
         <div>{tiers.map((tier) => <Tier {...tier} />)}</div>
         <div>
           <ItemList
-            id={`untiered-${id}`}
-            items={untieredItems()}
+            tierId={`untiered-${id}`}
           />
         </div>
       </div>

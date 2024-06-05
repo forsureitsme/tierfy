@@ -4,7 +4,7 @@ import { ItemList } from "@/islands/ItemList.tsx";
 import { ITier } from "@/types.d.ts";
 
 export const Tier: FunctionComponent<ITier> = (
-  { id, label, backgroundColor, items },
+  { id, label, backgroundColor },
 ) => {
   return (
     <div
@@ -32,7 +32,7 @@ export const Tier: FunctionComponent<ITier> = (
           backgroundColor: "black",
         }}
       >
-        <ItemList id={id} items={items} />
+        <ItemList tierId={id} />
       </div>
     </div>
   );

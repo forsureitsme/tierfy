@@ -3,14 +3,7 @@ import { existsSync } from "$std/fs/exists.ts";
 import { join } from "$std/path/join.ts";
 import { FreshContext } from "$fresh/src/server/types.ts";
 import { ITierlist } from "@/types.d.ts";
-
-const Tierlist = (
-  await import(
-    Deno.env.get("ENV") === "development"
-      ? "@/islands/TierlistWithHandlers.tsx"
-      : "@/components/TierlistWithoutHandlers.tsx"
-  )
-).default;
+import { Tierlist } from "@/islands/Tierlist.tsx";
 
 interface State {
   definition: ITierlist;
@@ -39,7 +32,7 @@ export default function Page(props: PageProps) {
 
   return (
     <section>
-      <Tierlist {...definition} />      
+      <Tierlist {...definition} />
     </section>
   );
 }
