@@ -7,9 +7,13 @@ import { ITierableItem } from "@/types.d.ts";
 
 export const Item = forwardRef<
   HTMLDivElement,
-  { id: ITierableItem["id"]; fake: boolean }
+  {
+    id: ITierableItem["id"];
+    fake: boolean;
+    className: string;
+  } | Element["attributes"]
 >(
-  ({ id, fake, style, ...props }, ref) => {
+  ({ id, fake, className, ...props }, ref) => {
     const tierlistSignal = useContext(
       TierlistSignalContext,
     );
@@ -25,15 +29,15 @@ export const Item = forwardRef<
         ref={ref}
         {...props}
         style={{
-          ...style,
-          opacity: fake ? 0.3 : 1,
-          width: "150px",
-          height: "150px",
           backgroundImage: `url(${asset(`/img/tierlist-items/${image}`)})`,
-          userSelect: "none",
         }}
+        className={`${
+          fake && `opacity-30`
+        } grid justify-center content-end select-none bg-cover size-32 overflow-hidden group ${className}`}
       >
-        {name}
+        <div className="px-1 py-1 drop-shadow-sm text-white antialiased backdrop-blur rounded-t top-full translate-y-full group-hover:translate-y-0 transition-transform duration-75">
+          {name}
+        </div>
       </div>
     );
   },

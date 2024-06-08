@@ -108,3 +108,18 @@ export const makeTierableItem = (
     remoteImage: imageUrl.href,
   };
 };
+
+export const getTierlistDefinition = (definition: string): ITierlist => {
+  const filePath = join(
+    Deno.cwd(),
+    "static",
+    "tierlists",
+    "definitions",
+    `${definition}.json`,
+  );
+  if (!existsSync(filePath)) {
+    throw new Deno.errors.NotFound();
+  }
+
+  return JSON.parse(Deno.readTextFileSync(filePath));
+};

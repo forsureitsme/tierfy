@@ -4,6 +4,7 @@
 
 import * as $_404 from "./routes/_404.tsx";
 import * as $_app from "./routes/_app.tsx";
+import * as $api_tierlists_definition_ from "./routes/api/tierlists/[definition].tsx";
 import * as $index from "./routes/index.tsx";
 import * as $tierlist_definition_ from "./routes/tierlist/[definition].tsx";
 import * as $DraggableItem from "./islands/DraggableItem.tsx";
@@ -18,6 +19,7 @@ const manifest = {
   routes: {
     "./routes/_404.tsx": $_404,
     "./routes/_app.tsx": $_app,
+    "./routes/api/tierlists/[definition].tsx": $api_tierlists_definition_,
     "./routes/index.tsx": $index,
     "./routes/tierlist/[definition].tsx": $tierlist_definition_,
   },

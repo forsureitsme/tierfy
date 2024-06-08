@@ -26,6 +26,7 @@
     "preact/": "https://esm.sh/preact@10.19.6/",
     "preact@10.19.6/jsx-runtime": "https://esm.sh/preact@10.19.6/jsx-runtime",
     "tailwindcss": "npm:tailwindcss@3.4.1",
+    "tailwindcss/": "npm:/tailwindcss@3.4.1/",
     "tailwindcss/plugin": "npm:/tailwindcss@3.4.1/plugin.js",
     "$std/": "https://deno.land/std@0.216.0/",
     "$esm/": "https://esm.sh/",

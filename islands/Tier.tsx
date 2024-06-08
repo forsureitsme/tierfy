@@ -7,31 +7,15 @@ export const Tier: FunctionComponent<ITier> = (
   { id, label, backgroundColor },
 ) => {
   return (
-    <div
-      style={{
-        display: "grid",
-        gridTemplateColumns: "1fr 11fr",
-      }}
-    >
+    <div className="grid grid-cols-[128px_1fr] border-b border-b-transparent">
       <div
-        style={{
-          backgroundColor,
-          minHeight: "50px",
-          textAlign: "center",
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "center",
-          alignItems: "center",
-        }}
+        style={{ backgroundColor }}
+        className={`min-h-32 text-center flex flex-col justify-center items-center`}
         contentEditable={true}
       >
         {label}
       </div>
-      <div
-        style={{
-          backgroundColor: "black",
-        }}
-      >
+      <div className="bg-black">
         <ItemList tierId={id} />
       </div>
     </div>

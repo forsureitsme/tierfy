@@ -72,20 +72,14 @@ export const DraggableItem: FunctionComponent<
   return (
     <div
       ref={droppableRef}
-      style={{
-        position: "relative",
-        border: "1px solid red",
-        display: "flex",
-      }}
+      className="flex relative cursor-grab active:cursor-grabbing"
     >
       {itemDraggedOver.value && <Item fake id={itemDraggedOver.value} />}
 
       <Item
         ref={draggableRef}
         id={id}
-        style={{
-          display: isDraggingItem.value ? "none" : "",
-        }}
+        className={`${isDraggingItem.value && `hidden`}`}
       />
     </div>
   );
