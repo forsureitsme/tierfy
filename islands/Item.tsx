@@ -33,14 +33,9 @@ export const Item = forwardRef<
         }}
         className={`${
           fake && `opacity-30`
-        } grid justify-center content-end select-none bg-cover size-32 overflow-hidden group ${className}`}
-      >
-        {!fake && (
-          <div className="px-1 py-1 drop-shadow-sm text-white antialiased backdrop-blur rounded-t top-full translate-y-full group-hover:translate-y-0 transition-transform duration-75">
-            {name}
-          </div>
-        )}
-      </div>
+        } grid justify-center content-end select-none bg-cover size-32 overflow-hidden ${className}`}
+        title={!fake ? name : undefined}
+      />
     );
   },
 );
