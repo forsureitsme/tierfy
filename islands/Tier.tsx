@@ -10,7 +10,7 @@ export const Tier: FunctionComponent<ITier> = (
     <div className="grid grid-cols-[128px_1fr] border-b border-b-transparent">
       <div
         style={{ backgroundColor }}
-        className={`min-h-32 text-center flex flex-col justify-center items-center`}
+        className={`text-center flex flex-col justify-center items-center`}
         contentEditable={true}
       >
         {label}

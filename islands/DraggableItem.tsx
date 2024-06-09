@@ -13,7 +13,6 @@ import {
 } from "$esm/v135/@atlaskit/pragmatic-drag-and-drop@1.1.10/dist/types/internal-types.d.ts";
 import { useSignal } from "@preact/signals";
 import { Item } from "@/islands/Item.tsx";
-import { getItemById } from "@/islands/TierlistHandlers.ts";
 
 export const DraggableItem: FunctionComponent<
   { tierId: ITier["id"]; id: ITierableItem["id"] }

@@ -19,7 +19,7 @@ export const Item = forwardRef<
     );
     if (!tierlistSignal?.value.items) return null;
 
-    const item = getItemById(tierlistSignal.value, id);
+    const item = getItemById(tierlistSignal, id);
     if (!item) return null;
 
     const { name, image } = item;
@@ -35,9 +35,11 @@ export const Item = forwardRef<
           fake && `opacity-30`
         } grid justify-center content-end select-none bg-cover size-32 overflow-hidden group ${className}`}
       >
-        <div className="px-1 py-1 drop-shadow-sm text-white antialiased backdrop-blur rounded-t top-full translate-y-full group-hover:translate-y-0 transition-transform duration-75">
-          {name}
-        </div>
+        {!fake && (
+          <div className="px-1 py-1 drop-shadow-sm text-white antialiased backdrop-blur rounded-t top-full translate-y-full group-hover:translate-y-0 transition-transform duration-75">
+            {name}
+          </div>
+        )}
       </div>
     );
   },

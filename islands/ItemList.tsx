@@ -63,13 +63,23 @@ export const ItemList: FunctionComponent<
   }, []);
 
   const items = tierId.startsWith("untiered")
-    ? tierlistSignal.value.items.map((item) => item.id)
+    ? tierlistSignal.value.items.reduce((
+      untieredItems,
+      untieredItem,
+    ) => [
+      ...untieredItems,
+      ...tierlistSignal.value.tiers.some((tier) =>
+          tier.items.some((tierItem) => tierItem === untieredItem.id)
+        )
+        ? []
+        : [untieredItem.id],
+    ], [] as ITier["items"])
     : tierlistSignal.value.tiers.find((tier) => tier.id === tierId)?.items;
 
   return (
     <div
       ref={droppableRef}
-      className="flex flex-wrap h-full relative"
+      className="flex flex-wrap h-full relative min-h-32"
     >
       {items?.map((itemId: ITierableItem["id"]) => (
         <DraggableItem
