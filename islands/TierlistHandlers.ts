@@ -6,36 +6,93 @@ export const getItemById = (
   itemId: ITierableItem["id"],
 ) => tierlistSignal.value.items.find((item) => item.id === itemId) || null;
 
-export const moveItemToTier = (
+export const moveItem = (
   tierlistSignal: Signal<ITierlist>,
-  itemId: ITierableItem["id"],
-  tierlistId: ITier["id"],
+  sourceTierId: ITier["id"],
+  sourceItemId: ITierableItem["id"],
+  targetTierId: ITier["id"],
+  targetItemId: ITierableItem["id"],
 ): void => {
   const newTierlist = { ...tierlistSignal.value };
 
-  newTierlist.tiers = [...newTierlist.tiers.map((tier: ITier) => {
-    tier.items = tier.items.filter((tierItemId) => tierItemId !== itemId);
-
-    if (tier.id === tierlistId) {
-      tier.items.push(itemId);
-    }
-
-    return tier;
-  })];
-
-  if (tierlistId.startsWith("untiered")) {
-    newTierlist.items.push(
-      newTierlist.items.splice(
-        newTierlist.items.findIndex((tierableItem) =>
-          tierableItem.id === itemId
-        ),
-        1,
-      )[0],
+  if (
+    sourceTierId.startsWith("untiered") && targetTierId.startsWith("untiered")
+  ) {
+    swapUntieredItems(newTierlist.items, sourceItemId, targetItemId);
+  } else if (
+    !sourceTierId.startsWith("untiered") && targetTierId.startsWith("untiered")
+  ) {
+    untierItem(newTierlist.tiers, sourceItemId, sourceTierId);
+    swapUntieredItems(newTierlist.items, sourceItemId, targetItemId);
+  } else if (
+    sourceTierId.startsWith("untiered") && !targetTierId.startsWith("untiered")
+  ) {
+    tierItem(
+      newTierlist.tiers,
+      sourceItemId,
+      targetItemId,
+      targetTierId,
     );
-
-    newTierlist.items = [...newTierlist.items];
+  } else if (
+    !sourceTierId.startsWith("untiered") && !targetTierId.startsWith("untiered")
+  ) {
+    untierItem(newTierlist.tiers, sourceItemId, sourceTierId);
+    tierItem(
+      newTierlist.tiers,
+      sourceItemId,
+      targetItemId,
+      targetTierId,
+    );
   }
 
   tierlistSignal.value = newTierlist;
-  return;
+};
+
+const swapUntieredItems = (
+  untieredItems: ITierlist["items"],
+  sourceItemId: ITierableItem["id"],
+  targetItemId: ITierableItem["id"],
+) => {
+  const sourceItem = untieredItems.splice(
+    untieredItems.findIndex((item) => item.id === sourceItemId),
+    1,
+  )[0];
+
+  untieredItems.splice(
+    targetItemId
+      ? untieredItems.findIndex((item) => item.id === targetItemId)
+      : untieredItems.length,
+    0,
+    sourceItem,
+  );
+};
+
+const untierItem = (
+  tiers: ITierlist["tiers"],
+  sourceItemId: ITierableItem["id"],
+  sourceTierId: ITierableItem["id"],
+) => {
+  const tier = tiers.find((tier) => tier.id === sourceTierId);
+
+  tier?.items.splice(
+    tier.items.findIndex((itemId) => itemId === sourceItemId),
+    1,
+  );
+};
+
+const tierItem = (
+  tiers: ITierlist["tiers"],
+  sourceItemId: ITierableItem["id"],
+  targetItemId: ITierableItem["id"],
+  targetTierId: ITier["id"],
+) => {
+  const tier = tiers.find((tier) => tier.id === targetTierId);
+
+  tier?.items.splice(
+    targetItemId
+      ? tier.items.findIndex((itemId) => itemId === targetItemId)
+      : tier.items.length,
+    0,
+    sourceItemId,
+  );
 };

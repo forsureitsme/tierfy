@@ -59,7 +59,7 @@ export const DraggableItem: FunctionComponent<
       }),
       dropTargetForElements({
         element: droppableRef.current,
-        getData: () => ({ id }),
+        getData: () => ({ id, tierId }),
         canDrop: ({ source }) => source.data.type === "item",
         onDrop: onDragLeave,
         onDropTargetChange,
