@@ -96,3 +96,21 @@ const tierItem = (
     sourceItemId,
   );
 };
+
+export const updateItem = (
+  tierlistSignal: Signal<ITierlist>,
+  itemId: ITierableItem["id"],
+  props: Record<string, unknown>,
+) => {
+  const { items } = tierlistSignal.value;
+  const itemIndex = items.findIndex((item) => item.id === itemId);
+  if (itemIndex < 0) return;
+
+  const newItem = { ...items[itemIndex] } as ITierableItem;
+  Object.entries(props).forEach(([key, value]) => {
+    newItem[key] = value;
+  });
+
+  items.splice(itemIndex, 1, newItem);
+  tierlistSignal.value = { ...tierlistSignal.value };
+};

@@ -9,6 +9,7 @@ import * as $index from "./routes/index.tsx";
 import * as $tierlist_definition_ from "./routes/tierlist/[definition].tsx";
 import * as $DraggableItem from "./islands/DraggableItem.tsx";
 import * as $Item from "./islands/Item.tsx";
+import * as $ItemEdit from "./islands/ItemEdit.tsx";
 import * as $ItemList from "./islands/ItemList.tsx";
 import * as $Tier from "./islands/Tier.tsx";
 import * as $Tierlist from "./islands/Tierlist.tsx";
@@ -26,6 +27,7 @@ const manifest = {
   islands: {
     "./islands/DraggableItem.tsx": $DraggableItem,
     "./islands/Item.tsx": $Item,
+    "./islands/ItemEdit.tsx": $ItemEdit,
     "./islands/ItemList.tsx": $ItemList,
     "./islands/Tier.tsx": $Tier,
     "./islands/Tierlist.tsx": $Tierlist,

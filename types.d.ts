@@ -1,6 +1,6 @@
 export type CryptoUUID = `${string}-${string}-${string}-${string}-${string}`;
 
-export interface ITierableItem {
+export interface ITierableItem extends Record<string, unknown> {
   id: CryptoUUID;
   name: string;
   image: string;
