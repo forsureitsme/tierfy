@@ -47,7 +47,7 @@ export const Tierlist: FunctionComponent<ITierlist> = (
   return (
     <TierlistSignalContext.Provider value={tierlistSignal}>
       <div className="container mx-auto">
-        <h2 className="font-sans text-5xl font-bold tracking-tighter p-10 text-center">
+        <h2 className="text-5xl font-bold tracking-tighter p-10 text-center">
           {name}
         </h2>
         <div>{tiers.map((tier) => <Tier {...tier} />)}</div>
