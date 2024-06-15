@@ -3,22 +3,43 @@ import { useContext, useRef } from "preact/hooks";
 import { type FunctionComponent } from "preact";
 import { TierlistSignalContext } from "@/islands/Tierlist.tsx";
 import { getItemById, updateItem } from "@/islands/TierlistHandlers.ts";
-import { Icon } from "$esm/@iconify-icon/react@2.1.0?alias=react:preact/compat&deps=preact";
-import TablerEdit from "$esm/@iconify-icons/tabler@1.2.95/edit";
+import { Icon } from "@iconify-icon/react";
 
 const ItemEdit: FunctionComponent<{ id: ITierableItem["id"] }> = ({ id }) => {
   const dialogRef = useRef(null as HTMLDialogElement | null);
   const formRef = useRef(null as HTMLFormElement | null);
   const tierlistSignal = useContext(TierlistSignalContext);
+  const nameInputRef = useRef(null as HTMLInputElement | null);
 
   if (!tierlistSignal) return null;
 
   const item = getItemById(tierlistSignal, id);
 
+  const openDialog = () => {
+    dialogRef.current?.showModal();
+  };
+
   const onDialogClosed = () => {
     if (!formRef.current) return;
 
-    updateItem(tierlistSignal, id, Object.fromEntries(new FormData(formRef.current)));
+    if (formRef.current.matches(":invalid")) {
+      openDialog();
+      return;
+    }
+
+    updateItem(
+      tierlistSignal,
+      id,
+      Object.fromEntries(new FormData(formRef.current)),
+    );
+  };
+
+  // TODO: Verify if this `<dialog />` autofocus bug is still present
+  const moveCursorToEnd = () => {
+    if (!nameInputRef.current) return;
+    nameInputRef.current.selectionStart =
+      nameInputRef.current.selectionEnd =
+        nameInputRef.current.value.length;
   };
 
   return (
@@ -26,9 +47,9 @@ const ItemEdit: FunctionComponent<{ id: ITierableItem["id"] }> = ({ id }) => {
       <button
         type="button"
         className="appearance-none absolute right-0 top-0 p-1 text-white drop-shadow-sm"
-        onClick={() => dialogRef.current?.showModal()}
+        onClick={openDialog}
       >
-        <Icon icon={TablerEdit} />
+        <Icon icon="tabler:edit" />
       </button>
       <dialog
         ref={dialogRef}
@@ -40,6 +61,9 @@ const ItemEdit: FunctionComponent<{ id: ITierableItem["id"] }> = ({ id }) => {
             Name
           </label>
           <input
+            ref={nameInputRef}
+            autofocus
+            onFocus={moveCursorToEnd}
             required
             class="appearance-none border rounded w-full py-2 px-3"
             id={`item-${id}-edit-name`}

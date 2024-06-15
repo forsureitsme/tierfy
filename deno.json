@@ -29,9 +29,11 @@
     "tailwindcss/": "npm:/tailwindcss@3.4.1/",
     "tailwindcss/plugin": "npm:/tailwindcss@3.4.1/plugin.js",
     "$std/": "https://deno.land/std@0.216.0/",
-    "$esm/": "https://esm.sh/",
     "@preact/signals": "https://esm.sh/*@preact/signals@1.2.2",
     "@preact/signals-core": "https://esm.sh/*@preact/signals-core@1.5.1",
+    "@tanstack/react-query": "https://esm.sh/@tanstack/react-query@5.45.0?alias=react:preact/compat,react-dom:preact/compat,@types/react:preact/compat&external=preact",
+    "@iconify-icon/react": "https://esm.sh/@iconify-icon/react@2.1.0?alias=react:preact/compat,react-dom:preact/compat,@types/react:preact/compat&external=preact",
+    "$esm/": "https://esm.sh/",
     "@/": "./"
   },
   "compilerOptions": {
