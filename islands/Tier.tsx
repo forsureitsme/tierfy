@@ -15,8 +15,10 @@ export const Tier: FunctionComponent<ITier> = (
       >
         {label}
       </div>
-      <div className="bg-black">
-        <ItemList tierId={id} />
+      <div style={{ backgroundColor }}>
+        <div className="backdrop-brightness-50">
+          <ItemList tierId={id} />
+        </div>
       </div>
     </div>
   );

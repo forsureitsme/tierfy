@@ -82,7 +82,7 @@ export const DraggableItem: FunctionComponent<
         className={`${isDraggingItem.value && `hidden`}`}
       />
 
-      <ItemEdit id={id} />
+      {!isDraggingItem.value && <ItemEdit id={id} />}
     </div>
   );
 };

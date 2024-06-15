@@ -20,7 +20,7 @@ export default function Page(props: PageProps) {
   const { definition } = props.state as unknown as State;
 
   return (
-    <section>
+    <section className="min-h-screen bg-black text-white">
       <Tierlist {...definition} />
     </section>
   );

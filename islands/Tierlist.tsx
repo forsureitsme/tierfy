@@ -33,17 +33,25 @@ export const Tierlist: FunctionComponent<ITierlist> = (
         const targetTierId = location.current.dropTargets[0].data
           .tierId as ITier["id"];
 
-        moveItem(tierlistSignal, sourceTierId, sourceItemId, targetTierId, targetItemId);
+        moveItem(
+          tierlistSignal,
+          sourceTierId,
+          sourceItemId,
+          targetTierId,
+          targetItemId,
+        );
       },
     });
   }, []);
 
   return (
     <TierlistSignalContext.Provider value={tierlistSignal}>
-      <div>
-        <h2>{name}</h2>
+      <div className="container mx-auto">
+        <h2 className="font-sans text-5xl font-bold tracking-tighter p-10 text-center">
+          {name}
+        </h2>
         <div>{tiers.map((tier) => <Tier {...tier} />)}</div>
-        <div>
+        <div className="mt-5">
           <ItemList
             tierId={`untiered-${id}`}
           />
