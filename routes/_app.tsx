@@ -8,7 +8,7 @@ export default function App({ Component }: PageProps) {
         <title>Tierfy</title>
         <link rel="stylesheet" href="/styles.css" />
       </head>
-      <body>
+      <body className="min-h-screen bg-black text-white">
         <Component />
       </body>
     </html>

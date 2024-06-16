@@ -4,7 +4,7 @@ import { type FunctionComponent } from "preact";
 import { TierlistContext } from "@/islands/Tierlist.tsx";
 import { getItemById, updateItem } from "@/islands/TierlistHandlers.ts";
 import { Icon } from "@iconify-icon/react";
-import UpdateTierableItem from "@/mutations/UpdateTierableItem.ts";
+import UpdateTierableItem from "@/components/mutations/UpdateTierableItem.ts";
 import { slug } from "https://deno.land/x/slug@v1.1.0/mod.ts";
 import { useMutation } from '@tanstack/react-query';
 

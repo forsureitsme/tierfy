@@ -5,21 +5,28 @@ import {
   saveTierListDefinition,
 } from "@/services/tierlist.ts";
 
-const baseUrl = "https://kpopping.com";
+class Kpopping {
+  static baseUrl = "https://kpopping.com";
 
-const response = await fetch(Deno.args[0]);
-const body = await response.text();
-const $ = load(body);
+  static async makeTierlistWithGroupSlug(groupSlug: string) {
+    const response = await fetch(`${this.baseUrl}/profiles/group/${groupSlug}`);
+    const body = await response.text();
+    const $ = load(body);
 
-const $encyclopedia = $(".encyclopedia");
-const groupName = $(".group-pose figcaption h1", $encyclopedia).text().trim();
+    const $encyclopedia = $(".encyclopedia");
+    const groupName = $(".group-pose figcaption h1", $encyclopedia).text()
+      .trim();
 
-const members: Array<ITierableItem> = [];
-$(".members .member img", $encyclopedia).each((_, element): void => {
-  members.push(makeTierableItem(groupName, {
-    name: $(element).attr("alt") || "",
-    remoteImage: new URL($(element).attr("src") || "", baseUrl).href,
-  }));
-});
+    const members: Array<ITierableItem> = [];
+    $(".members .member img", $encyclopedia).each((_, element): void => {
+      members.push(makeTierableItem(groupName, {
+        name: $(element).attr("alt") || "",
+        remoteImage: new URL($(element).attr("src") || "", this.baseUrl).href,
+      }));
+    });
 
-await saveTierListDefinition(groupName, members);
+    await saveTierListDefinition(groupName, members);
+  }
+}
+
+export default Kpopping;

@@ -8,8 +8,9 @@ import { monitorForElements } from "$esm/@atlaskit/pragmatic-drag-and-drop@1.1.1
 import { moveItem } from "@/islands/TierlistHandlers.ts";
 import Loading from "@/components/Loading.tsx";
 import { useMutation, useQuery } from "@tanstack/react-query";
-import UpdateTierlist from "@/mutations/UpdateTierlist.ts";
-import TierlistQuery from "@/queries/Tierlist.ts";
+import UpdateTierlist from "@/components/mutations/UpdateTierlist.ts";
+import TierlistQuery from "@/components/queries/Tierlist.ts";
+import Error from "@/components/Error.tsx";
 
 export const TierlistContext = createContext<ITierlist | null>(
   null,
@@ -57,15 +58,7 @@ export const Tierlist: FunctionComponent<{ slug: string }> = (
   }
 
   if (isError) {
-    return (
-      <div
-        class="bg-orange-100 border-l-4 border-orange-500 text-orange-700 p-4"
-        role="alert"
-      >
-        <p class="font-bold">Error</p>
-        <p>{error.message}</p>
-      </div>
-    );
+    return <Error error={error} />;
   }
 
   return (
