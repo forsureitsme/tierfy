@@ -4,13 +4,14 @@
 
 import * as $_404 from "./routes/_404.tsx";
 import * as $_app from "./routes/_app.tsx";
-import * as $api_tierlists_definition_ from "./routes/api/tierlists/[definition].tsx";
+import * as $api_tierlists_slug_ from "./routes/api/tierlists/[slug].tsx";
 import * as $index from "./routes/index.tsx";
-import * as $tierlist_definition_ from "./routes/tierlist/[definition].tsx";
+import * as $tierlist_slug_ from "./routes/tierlist/[slug].tsx";
 import * as $DraggableItem from "./islands/DraggableItem.tsx";
 import * as $Item from "./islands/Item.tsx";
 import * as $ItemEdit from "./islands/ItemEdit.tsx";
 import * as $ItemList from "./islands/ItemList.tsx";
+import * as $Providers from "./islands/Providers.tsx";
 import * as $Tier from "./islands/Tier.tsx";
 import * as $Tierlist from "./islands/Tierlist.tsx";
 import * as $TierlistHandlers from "./islands/TierlistHandlers.ts";
@@ -20,15 +21,16 @@ const manifest = {
   routes: {
     "./routes/_404.tsx": $_404,
     "./routes/_app.tsx": $_app,
-    "./routes/api/tierlists/[definition].tsx": $api_tierlists_definition_,
+    "./routes/api/tierlists/[slug].tsx": $api_tierlists_slug_,
     "./routes/index.tsx": $index,
-    "./routes/tierlist/[definition].tsx": $tierlist_definition_,
+    "./routes/tierlist/[slug].tsx": $tierlist_slug_,
   },
   islands: {
     "./islands/DraggableItem.tsx": $DraggableItem,
     "./islands/Item.tsx": $Item,
     "./islands/ItemEdit.tsx": $ItemEdit,
     "./islands/ItemList.tsx": $ItemList,
+    "./islands/Providers.tsx": $Providers,
     "./islands/Tier.tsx": $Tier,
     "./islands/Tierlist.tsx": $Tierlist,
     "./islands/TierlistHandlers.ts": $TierlistHandlers,

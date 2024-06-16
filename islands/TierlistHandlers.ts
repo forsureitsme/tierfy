@@ -1,19 +1,18 @@
 import { ITier, ITierableItem, ITierlist } from "@/types.d.ts";
-import { Signal } from "@preact/signals";
 
 export const getItemById = (
-  tierlistSignal: Signal<ITierlist>,
+  tierlist: ITierlist,
   itemId: ITierableItem["id"],
-) => tierlistSignal.value.items.find((item) => item.id === itemId) || null;
+) => tierlist?.items.find((item) => item.id === itemId) || null;
 
 export const moveItem = (
-  tierlistSignal: Signal<ITierlist>,
+  tierlist: ITierlist,
   sourceTierId: ITier["id"],
   sourceItemId: ITierableItem["id"],
   targetTierId: ITier["id"],
   targetItemId: ITierableItem["id"],
-): void => {
-  const newTierlist = { ...tierlistSignal.value };
+) => {
+  const newTierlist = { ...tierlist };
 
   if (
     sourceTierId.startsWith("untiered") && targetTierId.startsWith("untiered")
@@ -45,7 +44,7 @@ export const moveItem = (
     );
   }
 
-  tierlistSignal.value = newTierlist;
+  return newTierlist;
 };
 
 const swapUntieredItems = (
@@ -98,11 +97,11 @@ const tierItem = (
 };
 
 export const updateItem = (
-  tierlistSignal: Signal<ITierlist>,
+  tierlist: ITierlist,
   itemId: ITierableItem["id"],
   props: Record<string, unknown>,
 ) => {
-  const { items } = tierlistSignal.value;
+  const { items } = tierlist;
   const itemIndex = items.findIndex((item) => item.id === itemId);
   if (itemIndex < 0) return;
 
@@ -112,5 +111,5 @@ export const updateItem = (
   });
 
   items.splice(itemIndex, 1, newItem);
-  tierlistSignal.value = { ...tierlistSignal.value };
+  tierlist = { ...tierlist };
 };

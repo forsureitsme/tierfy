@@ -1,14 +1,14 @@
 import { ITierableItem } from "@/types.d.ts";
 import { useContext, useRef } from "preact/hooks";
 import { type FunctionComponent } from "preact";
-import { TierlistSignalContext } from "@/islands/Tierlist.tsx";
+import { TierlistContext } from "@/islands/Tierlist.tsx";
 import { getItemById, updateItem } from "@/islands/TierlistHandlers.ts";
 import { Icon } from "@iconify-icon/react";
 
 const ItemEdit: FunctionComponent<{ id: ITierableItem["id"] }> = ({ id }) => {
   const dialogRef = useRef(null as HTMLDialogElement | null);
   const formRef = useRef(null as HTMLFormElement | null);
-  const tierlistSignal = useContext(TierlistSignalContext);
+  const tierlistSignal = useContext(TierlistContext);
   const nameInputRef = useRef(null as HTMLInputElement | null);
 
   if (!tierlistSignal) return null;

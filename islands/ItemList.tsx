@@ -13,7 +13,7 @@ import {
 } from "$esm/v135/@atlaskit/pragmatic-drag-and-drop@1.1.10/dist/types/internal-types.d.ts";
 import { useSignal } from "@preact/signals";
 import { Item } from "@/islands/Item.tsx";
-import { TierlistSignalContext } from "@/islands/Tierlist.tsx";
+import { TierlistContext } from "@/islands/Tierlist.tsx";
 
 export const ItemList: FunctionComponent<
   { tierId: CryptoUUID }
@@ -23,10 +23,10 @@ export const ItemList: FunctionComponent<
   const droppableRef = useRef<HTMLDivElement | null>(null);
   const itemDraggedOver = useSignal<ITierableItem["id"] | null>(null);
 
-  const tierlistSignal = useContext(
-    TierlistSignalContext,
+  const tierlist = useContext(
+    TierlistContext,
   );
-  if (!tierlistSignal?.value.items) return null;
+  if (!tierlist?.items) return null;
 
   const onDropTargetChange = (
     { source, location }:
@@ -63,18 +63,18 @@ export const ItemList: FunctionComponent<
   }, []);
 
   const items = tierId.startsWith("untiered")
-    ? tierlistSignal.value.items.reduce((
+    ? tierlist.items.reduce((
       untieredItems,
       untieredItem,
     ) => [
       ...untieredItems,
-      ...tierlistSignal.value.tiers.some((tier) =>
+      ...tierlist.tiers.some((tier) =>
           tier.items.some((tierItem) => tierItem === untieredItem.id)
         )
         ? []
         : [untieredItem.id],
     ], [] as ITier["items"])
-    : tierlistSignal.value.tiers.find((tier) => tier.id === tierId)?.items;
+    : tierlist.tiers.find((tier) => tier.id === tierId)?.items;
 
   return (
     <div

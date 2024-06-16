@@ -2,7 +2,7 @@ import { asset } from "$fresh/runtime.ts";
 import { forwardRef } from "preact/compat";
 import { useContext } from "preact/hooks";
 import { getItemById } from "@/islands/TierlistHandlers.ts";
-import { TierlistSignalContext } from "@/islands/Tierlist.tsx";
+import { TierlistContext } from "@/islands/Tierlist.tsx";
 import { ITierableItem } from "@/types.d.ts";
 
 export const Item = forwardRef<
@@ -15,9 +15,9 @@ export const Item = forwardRef<
 >(
   ({ id, fake, className, ...props }, ref) => {
     const tierlistSignal = useContext(
-      TierlistSignalContext,
+      TierlistContext,
     );
-    if (!tierlistSignal?.value.items) return null;
+    if (!tierlistSignal?.items) return null;
 
     const item = getItemById(tierlistSignal, id);
     if (!item) return null;

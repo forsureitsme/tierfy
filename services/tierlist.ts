@@ -74,9 +74,8 @@ export const saveTierListDefinition = async (
 
   const filePath = join(
     Deno.cwd(),
-    "static",
+    "data",
     "tierlists",
-    "definitions",
     `${slug(tierlistName)}.json`,
   );
   const localDir = dirname(filePath);
@@ -112,9 +111,8 @@ export const makeTierableItem = (
 export const getTierlistDefinition = (definition: string): ITierlist => {
   const filePath = join(
     Deno.cwd(),
-    "static",
+    "data",
     "tierlists",
-    "definitions",
     `${definition}.json`,
   );
   if (!existsSync(filePath)) {
