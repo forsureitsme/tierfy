@@ -4,16 +4,20 @@ import { type FunctionComponent } from "preact";
 import { TierlistContext } from "@/islands/Tierlist.tsx";
 import { getItemById, updateItem } from "@/islands/TierlistHandlers.ts";
 import { Icon } from "@iconify-icon/react";
+import UpdateTierableItem from "@/mutations/UpdateTierableItem.ts";
+import { slug } from "https://deno.land/x/slug@v1.1.0/mod.ts";
+import { useMutation } from '@tanstack/react-query';
 
 const ItemEdit: FunctionComponent<{ id: ITierableItem["id"] }> = ({ id }) => {
   const dialogRef = useRef(null as HTMLDialogElement | null);
   const formRef = useRef(null as HTMLFormElement | null);
-  const tierlistSignal = useContext(TierlistContext);
+  const tierlist = useContext(TierlistContext);
   const nameInputRef = useRef(null as HTMLInputElement | null);
+  const UpdateTierableItemMutation = useMutation(UpdateTierableItem);
 
-  if (!tierlistSignal) return null;
+  if (!tierlist) return null;
 
-  const item = getItemById(tierlistSignal, id);
+  const item = getItemById(tierlist, id);
 
   const openDialog = () => {
     dialogRef.current?.showModal();
@@ -27,11 +31,11 @@ const ItemEdit: FunctionComponent<{ id: ITierableItem["id"] }> = ({ id }) => {
       return;
     }
 
-    updateItem(
-      tierlistSignal,
-      id,
-      Object.fromEntries(new FormData(formRef.current)),
-    );
+    UpdateTierableItemMutation.mutate({
+      slug: slug(tierlist.name),
+      itemId: id,
+      itemProps: Object.fromEntries(new FormData(formRef.current)),
+    });
   };
 
   // TODO: Verify if this `<dialog />` autofocus bug is still present

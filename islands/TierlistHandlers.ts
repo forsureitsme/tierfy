@@ -99,17 +99,18 @@ const tierItem = (
 export const updateItem = (
   tierlist: ITierlist,
   itemId: ITierableItem["id"],
-  props: Record<string, unknown>,
+  itemProps: Record<string, unknown>,
 ) => {
   const { items } = tierlist;
   const itemIndex = items.findIndex((item) => item.id === itemId);
   if (itemIndex < 0) return;
 
   const newItem = { ...items[itemIndex] } as ITierableItem;
-  Object.entries(props).forEach(([key, value]) => {
+  Object.entries(itemProps).forEach(([key, value]) => {
     newItem[key] = value;
   });
 
   items.splice(itemIndex, 1, newItem);
-  tierlist = { ...tierlist };
+
+  return { ...tierlist };
 };

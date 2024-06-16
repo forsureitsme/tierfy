@@ -4,7 +4,8 @@
 
 import * as $_404 from "./routes/_404.tsx";
 import * as $_app from "./routes/_app.tsx";
-import * as $api_tierlists_slug_ from "./routes/api/tierlists/[slug].tsx";
+import * as $api_tierlists_slug_index from "./routes/api/tierlists/[slug]/index.tsx";
+import * as $api_tierlists_slug_items_itemId_index from "./routes/api/tierlists/[slug]/items/[itemId]/index.tsx";
 import * as $index from "./routes/index.tsx";
 import * as $tierlist_slug_ from "./routes/tierlist/[slug].tsx";
 import * as $DraggableItem from "./islands/DraggableItem.tsx";
@@ -21,7 +22,9 @@ const manifest = {
   routes: {
     "./routes/_404.tsx": $_404,
     "./routes/_app.tsx": $_app,
-    "./routes/api/tierlists/[slug].tsx": $api_tierlists_slug_,
+    "./routes/api/tierlists/[slug]/index.tsx": $api_tierlists_slug_index,
+    "./routes/api/tierlists/[slug]/items/[itemId]/index.tsx":
+      $api_tierlists_slug_items_itemId_index,
     "./routes/index.tsx": $index,
     "./routes/tierlist/[slug].tsx": $tierlist_slug_,
   },
