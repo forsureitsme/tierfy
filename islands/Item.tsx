@@ -11,30 +11,30 @@ export const Item = forwardRef<
     id: ITierableItem["id"];
     fake: boolean;
     className: string;
-  } | Element["attributes"]
+  } & Element["attributes"]
 >(
   ({ id, fake, className, ...props }, ref) => {
-    const tierlistSignal = useContext(
+    const tierlist = useContext(
       TierlistContext,
     );
-    if (!tierlistSignal?.items) return null;
+    if (!tierlist?.items) return null;
 
-    const item = getItemById(tierlistSignal, id);
+    const item = getItemById(tierlist, id);
     if (!item) return null;
-
+    
     const { name, image } = item;
 
     return (
       <div
         ref={ref}
         {...props}
+        className={`${
+          fake ? `opacity-30` : ""
+        } select-none bg-cover size-32 overflow-hidden ${className}`}
+        title={!fake ? name : undefined}
         style={{
           backgroundImage: `url(${asset(`/img/tierlist-items/${image}`)})`,
         }}
-        className={`${
-          fake && `opacity-30`
-        } grid justify-center content-end select-none bg-cover size-32 overflow-hidden ${className}`}
-        title={!fake ? name : undefined}
       />
     );
   },
