@@ -16,8 +16,6 @@ export default function Tierlists() {
     return <Error error={error} />;
   }
 
-  console.log(data);
-
   return (
     <div class="container mx-auto">
       <h2 className="text-5xl font-bold tracking-tighter p-10 text-center">

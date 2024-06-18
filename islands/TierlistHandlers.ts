@@ -47,6 +47,44 @@ export const moveItem = (
   return newTierlist;
 };
 
+export const moveTier = (
+  tierlist: ITierlist,
+  sourceTierId: ITier["id"],
+  targetTierId: ITier["id"],
+) => {
+  const newTierlist = { ...tierlist };
+
+  swapTiers(newTierlist.tiers, sourceTierId, targetTierId);
+
+  return newTierlist;
+};
+
+const swapTiers = (
+  tiers: ITierlist["tiers"],
+  sourceTierId: ITier["id"],
+  targetTierId: ITier["id"],
+) => {
+  const sourceTier = tiers.splice(
+    tiers.findIndex((tier) => tier.id === sourceTierId),
+    1,
+  )[0];
+
+  let targetTierIndex = tiers.length;
+  if (targetTierId) {
+    targetTierIndex = tiers.findIndex((tier) => tier.id === targetTierId);
+  }
+
+  if (targetTierIndex < 0) {
+    targetTierIndex = tiers.length;
+  }
+
+  tiers.splice(
+    targetTierIndex,
+    0,
+    sourceTier,
+  );
+};
+
 const swapUntieredItems = (
   untieredItems: ITierlist["items"],
   sourceItemId: ITierableItem["id"],

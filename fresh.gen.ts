@@ -11,6 +11,7 @@ import * as $index from "./routes/index.tsx";
 import * as $tierlists_slug_ from "./routes/tierlists/[slug].tsx";
 import * as $tierlists_index from "./routes/tierlists/index.tsx";
 import * as $DraggableItem from "./islands/DraggableItem.tsx";
+import * as $DraggableTier from "./islands/DraggableTier.tsx";
 import * as $Item from "./islands/Item.tsx";
 import * as $ItemEdit from "./islands/ItemEdit.tsx";
 import * as $ItemList from "./islands/ItemList.tsx";
@@ -19,6 +20,7 @@ import * as $Tier from "./islands/Tier.tsx";
 import * as $Tierlist from "./islands/Tierlist.tsx";
 import * as $TierlistHandlers from "./islands/TierlistHandlers.ts";
 import * as $Tierlists from "./islands/Tierlists.tsx";
+import * as $Tiers from "./islands/Tiers.tsx";
 import { type Manifest } from "$fresh/server.ts";
 
 const manifest = {
@@ -35,6 +37,7 @@ const manifest = {
   },
   islands: {
     "./islands/DraggableItem.tsx": $DraggableItem,
+    "./islands/DraggableTier.tsx": $DraggableTier,
     "./islands/Item.tsx": $Item,
     "./islands/ItemEdit.tsx": $ItemEdit,
     "./islands/ItemList.tsx": $ItemList,
@@ -43,6 +46,7 @@ const manifest = {
     "./islands/Tierlist.tsx": $Tierlist,
     "./islands/TierlistHandlers.ts": $TierlistHandlers,
     "./islands/Tierlists.tsx": $Tierlists,
+    "./islands/Tiers.tsx": $Tiers,
   },
   baseUrl: import.meta.url,
 } satisfies Manifest;

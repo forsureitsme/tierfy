@@ -1,25 +1,47 @@
-import { type FunctionComponent } from "preact";
-
 import { ItemList } from "@/islands/ItemList.tsx";
 import { ITier } from "@/types.d.ts";
+import { forwardRef } from "preact/compat";
+import { useContext } from "preact/hooks";
+import { TierlistContext } from "@/islands/Tierlist.tsx";
 
-export const Tier: FunctionComponent<ITier> = (
-  { id, label, backgroundColor },
-) => {
-  return (
-    <div className="grid grid-cols-[128px_1fr] border-b border-b-transparent">
+export const Tier = forwardRef<
+  HTMLDivElement,
+  {
+    id: ITier["id"];
+    fake: boolean;
+    className: string;
+  } & Element["attributes"]
+>(
+  ({ id, fake, className, ...props }, ref) => {
+    const tierlist = useContext(TierlistContext);
+    if (!tierlist) return null;
+
+    const tier = tierlist.tiers.find((tier) => tier.id === id);
+    if (!tier) return null;
+
+    const { backgroundColor, label } = tier;
+
+    return (
       <div
-        style={{ backgroundColor }}
-        className={`text-center flex flex-col justify-center items-center`}
-        contentEditable={true}
+        ref={ref}
+        {...props}
+        className={`${
+          fake ? `opacity-30` : ""
+        } select-none overflow-hidden grid grid-cols-[128px_1fr] border-b border-b-transparent ${className}`}
       >
-        {label}
-      </div>
-      <div style={{ backgroundColor }}>
-        <div className="backdrop-brightness-50">
-          <ItemList tierId={id} />
+        <div
+          style={{ backgroundColor }}
+          className={`text-center flex flex-col justify-center items-center`}
+          contentEditable={true}
+        >
+          {label}
+        </div>
+        <div style={{ backgroundColor }}>
+          <div className="backdrop-brightness-50">
+            <ItemList tierId={id} />
+          </div>
         </div>
       </div>
-    </div>
-  );
-};
+    );
+  },
+);
