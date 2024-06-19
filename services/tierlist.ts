@@ -1,10 +1,11 @@
 import { dirname } from "$std/path/dirname.ts";
 import { existsSync } from "$std/fs/exists.ts";
 import { join } from "$std/path/join.ts";
-import { IScrapedItem, ITierableItem, ITierlist } from "@/types.d.ts";
+import { IScrapedItem, ITier, ITierableItem, ITierlist } from "@/types.d.ts";
 import { extname } from "$std/path/extname.ts";
 import { delay } from "$std/async/delay.ts";
 import { slug } from "https://deno.land/x/slug@v1.1.0/mod.ts";
+import chroma from "npm:chroma-js";
 
 const downloadFileToPath = async (url: URL, filePath: string) => {
   await delay(50);
@@ -36,6 +37,16 @@ const processItemImages = async (items: Array<ITierableItem>) => {
   );
 };
 
+export const makeTier = (defaults?: Record<string, unknown>): ITier => ({
+  ...{
+    id: crypto.randomUUID(),
+    label: "Tier",
+    backgroundColor: chroma.random().hex(),
+    items: [],
+  },
+  ...defaults,
+});
+
 export const saveTierListDefinition = async (
   tierlistName: string,
   items: Array<ITierableItem>,
@@ -44,32 +55,14 @@ export const saveTierListDefinition = async (
     id: crypto.randomUUID(),
     name: tierlistName,
     items,
-    tiers: [{
-      id: crypto.randomUUID(),
-      label: "S",
-      backgroundColor: "#FF5733",
-      items: [],
-    }, {
-      id: crypto.randomUUID(),
-      label: "A",
-      backgroundColor: "#C70039",
-      items: [],
-    }, {
-      id: crypto.randomUUID(),
-      label: "B",
-      backgroundColor: "#900C3F",
-      items: [],
-    }, {
-      id: crypto.randomUUID(),
-      label: "C",
-      backgroundColor: "#581845",
-      items: [],
-    }, {
-      id: crypto.randomUUID(),
-      label: "D",
-      backgroundColor: "#DAF7A6",
-      items: [],
-    }],
+    tiers: [
+      makeTier({ label: "S" }),
+      makeTier({ label: "A" }),
+      makeTier({ label: "B" }),
+      makeTier({ label: "C" }),
+      makeTier({ label: "D" }),
+      makeTier({ label: "F" }),
+    ],
   };
 
   const filePath = join(

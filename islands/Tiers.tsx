@@ -11,10 +11,15 @@ import {
   ElementDragType,
 } from "$esm/v135/@atlaskit/pragmatic-drag-and-drop@1.1.10/dist/types/internal-types.d.ts";
 import { Tier } from "@/islands/Tier.tsx";
+import { Icon } from "@iconify-icon/react";
+import { makeTier } from "@/services/tierlist.ts";
+import UpdateTierlist from "@/components/mutations/UpdateTierlist.ts";
+import { useMutation } from "@tanstack/react-query";
 
 const Tiers: FunctionComponent = () => {
   const droppableRef = useRef<HTMLDivElement | null>(null);
   const tierDraggedOver = useSignal<ITier["id"] | null>(null);
+  const UpdateTierlistMutation = useMutation(UpdateTierlist);
 
   const tierlist = useContext(
     TierlistContext,
@@ -57,14 +62,37 @@ const Tiers: FunctionComponent = () => {
     });
   }, []);
 
+  const addTier = () => {
+    const newTier = makeTier();
+
+    const newTierlist = { ...tierlist };
+    newTierlist.tiers.push(newTier);
+
+    UpdateTierlistMutation.mutate(newTierlist);
+  };
+
   return (
     <div ref={droppableRef} className="pb-5 flex flex-col">
-      {tierlist.tiers.map((tier) => <DraggableTier
-        key={tier.id}
-        id={tier.id}
-      />)}
+      {tierlist.tiers.map((tier) => (
+        <DraggableTier
+          key={tier.id}
+          id={tier.id}
+        />
+      ))}
 
       {tierDraggedOver.value && <Tier fake id={tierDraggedOver.value} />}
+
+      <button
+        type="button"
+        className="
+          w-full text-center text-white bg-gray-700 py-2 px-4 rounded-lg text-2xl border-b-gray-800 border-b-[2px]
+          hover:border-b-[1px] hover:translate-y-[1px] hover:mb-[1px] hover:opacity-95
+          active:border-b-0 active:translate-y-[2px] active:mb-[2px]
+        "
+        onClick={() => addTier()}
+      >
+        <Icon icon="ci:add-row" />
+      </button>
     </div>
   );
 };
