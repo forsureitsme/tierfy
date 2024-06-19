@@ -28,7 +28,7 @@ export const Item = forwardRef<
       <div
         ref={ref}
         {...props}
-        className={`${
+        class={`${
           fake ? `opacity-30` : ""
         } select-none bg-cover size-32 overflow-hidden ${className}`}
         title={!fake ? name : undefined}

@@ -73,14 +73,14 @@ export const DraggableTier: FunctionComponent<
   return (
     <div
       ref={droppableRef}
-      className="flex flex-col relative cursor-grab active:cursor-row-resize"
+      class="flex flex-col relative cursor-grab active:cursor-row-resize"
     >
       {tierDraggedOver.value && <Tier fake id={tierDraggedOver.value} />}
 
       <Tier
         ref={draggableRef}
         id={id}
-        className={`${isDraggingTier.value && `hidden`}`}
+        class={`${isDraggingTier.value && `hidden`}`}
       />
     </div>
   );

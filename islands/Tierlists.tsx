@@ -18,11 +18,11 @@ export default function Tierlists() {
 
   return (
     <div class="container mx-auto">
-      <h2 className="text-5xl font-bold tracking-tighter p-10 text-center">
+      <h2 class="text-5xl font-bold tracking-tighter p-10 text-center">
         Tierlists
       </h2>
       <section>
-        <h3 className="text-4xl font-bold tracking-tighter p-10 text-center">
+        <h3 class="text-4xl font-bold tracking-tighter p-10 text-center">
           Local
         </h3>
         {tierlists.map((tierlist) => (

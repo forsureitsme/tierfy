@@ -8,8 +8,8 @@ export default function App({ Component }: PageProps) {
         <title>Tierfy</title>
         <link rel="stylesheet" href="/styles.css" />
       </head>
-      <body className="min-h-screen bg-black text-white">
-        <div className="bg-gray-950">
+      <body class="min-h-screen bg-black text-white">
+        <div class="bg-gray-950">
           <nav class="container mx-auto flex">
             <a href={"/tierlists"}>
               <h1 class="py-2 text-3xl font-bold tracking-tighter">

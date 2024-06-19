@@ -76,7 +76,7 @@ export const Tierlist: FunctionComponent<{ slug: string }> = (
 
   return (
     <TierlistContext.Provider value={tierlist}>
-      <h2 className="text-5xl font-bold tracking-tighter p-10 text-center">
+      <h2 class="text-5xl font-bold tracking-tighter p-10 text-center">
         {tierlist.name}
       </h2>
       <Tiers />

@@ -79,7 +79,7 @@ export const ItemList: FunctionComponent<
   return (
     <div
       ref={droppableRef}
-      className="flex flex-wrap h-full relative min-h-32"
+      class="flex flex-wrap h-full relative min-h-32"
     >
       {items?.map((itemId: ITierableItem["id"]) => (
         <DraggableItem

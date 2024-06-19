@@ -58,7 +58,7 @@ const Tiers: FunctionComponent = () => {
   }, []);
 
   return (
-    <div ref={droppableRef} className="pb-5 flex flex-col">
+    <div ref={droppableRef} class="pb-5 flex flex-col">
       {tierlist.tiers.map((tier) => <DraggableTier
         key={tier.id}
         id={tier.id}

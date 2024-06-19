@@ -50,17 +50,17 @@ const ItemEdit: FunctionComponent<{ id: ITierableItem["id"] }> = ({ id }) => {
     <div>
       <button
         type="button"
-        className="appearance-none absolute right-0 top-0 p-1 text-white drop-shadow-sm"
+        class="appearance-none absolute right-0 top-0 p-1 text-white drop-shadow-sm"
         onClick={openDialog}
       >
         <Icon icon="tabler:edit" />
       </button>
       <dialog
         ref={dialogRef}
-        className="backdrop:bg-black backdrop:opacity-70"
+        class="backdrop:bg-black backdrop:opacity-70"
         onClose={onDialogClosed}
       >
-        <form method="dialog" className="p-6" ref={formRef}>
+        <form method="dialog" class="p-6" ref={formRef}>
           <label class="block mb-2" for={`item-${id}-edit-name`}>
             Name
           </label>
