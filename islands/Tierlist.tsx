@@ -19,7 +19,7 @@ export const TierlistContext = createContext<ITierlist | null>(
 export const Tierlist: FunctionComponent<{ slug: string }> = (
   { slug },
 ) => {
-  const UpdateTierlistMutation = useMutation(UpdateTierlist);
+  const { mutate: updateTierlistMutation } = useMutation(UpdateTierlist);
   const { data, isPending, isError, error } = useQuery(
     TierlistQuery(slug),
   );
@@ -49,7 +49,7 @@ export const Tierlist: FunctionComponent<{ slug: string }> = (
             targetTierId,
             targetItemId,
           );
-          UpdateTierlistMutation.mutate(newTierlist);
+          updateTierlistMutation(newTierlist);
         } else if (source.data.type === "tier") {
           const sourceTierId = source.data.id as ITier["id"];
           const targetTierId = location.current.dropTargets[0].data
@@ -60,7 +60,7 @@ export const Tierlist: FunctionComponent<{ slug: string }> = (
             sourceTierId,
             targetTierId,
           );
-          UpdateTierlistMutation.mutate(newTierlist);
+          updateTierlistMutation(newTierlist);
         }
       },
     });

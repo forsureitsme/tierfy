@@ -13,7 +13,9 @@ const ItemEdit: FunctionComponent<{ id: ITierableItem["id"] }> = ({ id }) => {
   const formRef = useRef(null as HTMLFormElement | null);
   const tierlist = useContext(TierlistContext);
   const nameInputRef = useRef(null as HTMLInputElement | null);
-  const UpdateTierableItemMutation = useMutation(UpdateTierableItem);
+  const { mutate: updateTierableItem } = useMutation(
+    UpdateTierableItem,
+  );
 
   if (!tierlist) return null;
 
@@ -31,7 +33,7 @@ const ItemEdit: FunctionComponent<{ id: ITierableItem["id"] }> = ({ id }) => {
       return;
     }
 
-    UpdateTierableItemMutation.mutate({
+    updateTierableItem({
       slug: slug(tierlist.name),
       itemId: id,
       itemProps: Object.fromEntries(new FormData(formRef.current)),

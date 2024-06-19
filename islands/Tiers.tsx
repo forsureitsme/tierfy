@@ -19,7 +19,7 @@ import { useMutation } from "@tanstack/react-query";
 const Tiers: FunctionComponent = () => {
   const droppableRef = useRef<HTMLDivElement | null>(null);
   const tierDraggedOver = useSignal<ITier["id"] | null>(null);
-  const UpdateTierlistMutation = useMutation(UpdateTierlist);
+  const { mutate: updateTierlistMutation } = useMutation(UpdateTierlist);
 
   const tierlist = useContext(
     TierlistContext,
@@ -68,7 +68,7 @@ const Tiers: FunctionComponent = () => {
     const newTierlist = { ...tierlist };
     newTierlist.tiers.push(newTier);
 
-    UpdateTierlistMutation.mutate(newTierlist);
+    updateTierlistMutation(newTierlist);
   };
 
   return (
