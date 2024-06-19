@@ -3,6 +3,7 @@ import { ITier } from "@/types.d.ts";
 import { forwardRef } from "preact/compat";
 import { useContext } from "preact/hooks";
 import { TierlistContext } from "@/islands/Tierlist.tsx";
+import chroma from "npm:chroma-js";
 
 export const Tier = forwardRef<
   HTMLDivElement,
@@ -25,19 +26,23 @@ export const Tier = forwardRef<
       <div
         ref={ref}
         {...props}
-        className={`${
+        class={`${
           fake ? `opacity-30` : ""
-        } select-none overflow-hidden grid grid-cols-[128px_1fr] border-b border-b-transparent ${className}`}
+        } select-none overflow-hidden grid grid-cols-[128px_1fr] mb-1 ${className}`}
+        style={{ backgroundColor }}
       >
         <div
-          style={{ backgroundColor }}
-          className={`text-center flex flex-col justify-center items-center`}
+          class={`text-center flex flex-col justify-center items-center ${
+            chroma(backgroundColor).luminance() < 0.5
+              ? "text-white"
+              : "text-black"
+          }`}
           contentEditable={true}
         >
           {label}
         </div>
         <div style={{ backgroundColor }}>
-          <div className="backdrop-brightness-50">
+          <div class="backdrop-brightness-50">
             <ItemList tierId={id} />
           </div>
         </div>
