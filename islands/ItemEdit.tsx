@@ -6,7 +6,7 @@ import { getItemById, updateItem } from "@/islands/TierlistHandlers.ts";
 import { Icon } from "@iconify-icon/react";
 import UpdateTierableItem from "@/components/mutations/UpdateTierableItem.ts";
 import { slug } from "https://deno.land/x/slug@v1.1.0/mod.ts";
-import { useMutation } from '@tanstack/react-query';
+import { useMutation } from "@tanstack/react-query";
 
 const ItemEdit: FunctionComponent<{ id: ITierableItem["id"] }> = ({ id }) => {
   const dialogRef = useRef(null as HTMLDialogElement | null);
@@ -50,7 +50,7 @@ const ItemEdit: FunctionComponent<{ id: ITierableItem["id"] }> = ({ id }) => {
     <div>
       <button
         type="button"
-        className="appearance-none absolute right-0 top-0 p-1 text-white drop-shadow-sm"
+        className="appearance-none absolute right-0 top-0 p-1 text-white drop-shadow-lg mix-blend-difference"
         onClick={openDialog}
       >
         <Icon icon="tabler:edit" />
