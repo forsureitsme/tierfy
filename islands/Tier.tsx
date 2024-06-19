@@ -26,13 +26,13 @@ export const Tier = forwardRef<
       <div
         ref={ref}
         {...props}
-        class={`${
+        className={`${
           fake ? `opacity-30` : ""
         } select-none overflow-hidden grid grid-cols-[128px_1fr] mb-1 ${className}`}
         style={{ backgroundColor }}
       >
         <div
-          class={`text-center flex flex-col justify-center items-center ${
+          className={`text-center flex flex-col justify-center items-center ${
             chroma(backgroundColor).luminance() < 0.5
               ? "text-white"
               : "text-black"
@@ -42,7 +42,7 @@ export const Tier = forwardRef<
           {label}
         </div>
         <div style={{ backgroundColor }}>
-          <div class="backdrop-brightness-50">
+          <div className="backdrop-brightness-50">
             <ItemList tierId={id} />
           </div>
         </div>

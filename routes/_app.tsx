@@ -8,17 +8,17 @@ export default function App({ Component }: PageProps) {
         <title>Tierfy</title>
         <link rel="stylesheet" href="/styles.css" />
       </head>
-      <body class="min-h-screen bg-black text-white">
-        <div class="bg-gray-950">
-          <nav class="container mx-auto flex">
+      <body className="min-h-screen bg-black text-white">
+        <div className="bg-gray-950">
+          <nav className="container mx-auto flex">
             <a href={"/tierlists"}>
-              <h1 class="py-2 text-3xl font-bold tracking-tighter">
+              <h1 className="py-2 text-3xl font-bold tracking-tighter">
                 Tierfy
               </h1>
             </a>
           </nav>
         </div>
-        <div class="container mx-auto">
+        <div className="container mx-auto">
           <Component />
         </div>
       </body>
